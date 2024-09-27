@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Task 1</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family: sans-serif;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      td {
+        border: 1px solid #ddd;
+        width: 10px;
+        padding: 4px;
+      }
+      .lists {
+        background-color: #f2f2f2;
+        width: 30px;
+      }
+
+      th {
+        background-color: #f2f2f2;
+        padding: 4px;
+        text-align: left;
+      }
+    </style>
+
+    <script
+      src="https://unpkg.com/react@17/umd/react.development.js"
+      crossorigin
+    ></script>
+    <script
+      src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"
+      crossorigin
+    ></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+  </head>
+  <body>
+    
+    <div id="root"></div>
+
+    <script type="text/babel">
+      
+      const postData = async (columnIndex, value) => {
+        const response = await fetch("https://post-api-endpoint.com", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ columnIndex, value })
+        });
+        return response.json();
+      };
+
+    
+      function App() {
+        const handleInput = async (event, columnIndex) => {
+          const value = event.target.innerText;
+          console.log(event.target.value);
+          await postData(columnIndex, value);
+        };
+
+        const createRow = rowName => {
+          return (
+            <tr>
+              <td className="lists">{rowName}</td>
+              {[...Array(18)].map((_, index) => (
+                <td
+                  key={index}
+                  contentEditable="true"
+                  onBlur={e => handleInput(e, index)}
+                ></td>
+              ))}
+            </tr>
+          );
+        };
+
+        return (
+          <table>
+            <thead>
+              <tr>
+                <th colSpan="7">MONTH 1</th>
+              </tr>
+            </thead>
+            <tbody>
+              {createRow("Onboarding Call")}
+              {createRow("Google Search Console Access")}
+              {createRow("Google Analytics Access")}
+              {createRow("Website Access")}
+              {createRow("Technical Audit")}
+              {createRow("Anchor Text and Semantic Analysis	")}
+              {createRow("Competitor Analysis")}
+              {createRow("Anchor Text/URL Mapping")}
+              {createRow("Google Data Studio Report + Local Reporting Suite")}
+              {createRow("Site Level Optimization")}
+              {createRow("On Page Optimization")}
+              {createRow("Content Creation")}
+              {createRow("Content Publishing")}
+              {createRow("Premium Press Release")}
+              {createRow("Authority Niche Placements")}
+              {createRow("Review Management")}
+              {createRow("Index Links")}
+              {createRow("Video Recap")}
+            </tbody>
+          </table>
+        );
+      }
+      
+      ReactDOM.render(<App />, document.getElementById("root"));
+    </script>
+  </body>
+</html>
